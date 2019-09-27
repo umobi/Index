@@ -1,0 +1,6 @@
+use_frameworks!
+target 'Index_Tests' do
+  pod 'Index', :path => '../'
+  
+  
+end
