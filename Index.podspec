@@ -21,11 +21,11 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/brennobemoura/Index'
+  s.homepage         = 'https://github.com/umobi/Index'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'brennobemoura' => 'brenno@umobi.com.br' }
-  s.source           = { :git => 'https://github.com/brennobemoura/Index.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/umobi/Index.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
@@ -33,13 +33,6 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'Index/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'Index' => ['Index/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
   s.subspec 'Bindable' do |s|
         s.source_files = "Bidable/**/*"
         s.dependency "UMUtils/ViewModel"
