@@ -8,44 +8,44 @@
 
 import Foundation
 
-class Section<X, Y> {
-    let section: X
-    let items: [Y]
-    let index: Int
+public class Section<X, Y> {
+    public let section: X
+    public let items: [Y]
+    public let index: Int
     
-    init(_ section: X, items: [Y], section index: Int = 0) {
+    public init(_ section: X, items: [Y], section index: Int = 0) {
         self.section = section
         self.items = items
         self.index = index
     }
     
-    var asSectionRows: [SectionRow<X, Y>] {
+    public var asSectionRows: [SectionRow<X, Y>] {
         return self.items.enumerated().compactMap { SectionRow(self, row: .init($0.1, indexPath: .init(row: $0.0, section: self.index))) }
     }
 }
 
-final class SectionRow<Index, IndexRow>: IndexProtocol {
-    let value: Section<Index, IndexRow>?
-    let row: Row<IndexRow>
+final public class SectionRow<Index, IndexRow>: IndexProtocol {
+    public let value: Section<Index, IndexRow>?
+    public let row: Row<IndexRow>
     
-    init(_ section: Section<Index, IndexRow>, row: Row<IndexRow>) {
+    public init(_ section: Section<Index, IndexRow>, row: Row<IndexRow>) {
         self.value = section
         self.row = row
     }
     
-    func isSelected(_ value: Bool) -> SectionRow<Index, IndexRow> {
+    public func isSelected(_ value: Bool) -> SectionRow<Index, IndexRow> {
         return .init(self.item, row: .init(selected: self.row.item, indexPath: self.row.indexPath))
     }
     
-    var indexPath: IndexPath {
+    public var indexPath: IndexPath {
         return self.row.indexPath
     }
     
-    var isSelected: Bool {
+    public var isSelected: Bool {
         return self.row.isSelected
     }
     
-    var isFirst: Bool {
+    public var isFirst: Bool {
         guard let first = self.item.items.first as? Identifier else {
             return self.indexPath.row == 0
         }
@@ -57,7 +57,7 @@ final class SectionRow<Index, IndexRow>: IndexProtocol {
         return first == value
     }
     
-    var isLast: Bool {
+    public var isLast: Bool {
         guard let last = self.item.items.last as? Identifier else {
             return self.indexPath.row == self.item.items.count - 1
         }
@@ -69,17 +69,17 @@ final class SectionRow<Index, IndexRow>: IndexProtocol {
         return last == value
     }
     
-    func select(_ isSelected: Bool) -> SectionRow<Index, IndexRow> {
+    public func select(_ isSelected: Bool) -> SectionRow<Index, IndexRow> {
         return SectionRow(self.item, row: self.row.select(isSelected))
     }
     
-    init() {
+    public init() {
         self.value = nil
         self.row = .empty
     }
 }
 
-protocol SectionDataSource {
+public protocol SectionDataSource {
     associatedtype T
     var items: [T] { get }
     var asSection: Section<Self, T> { get }
@@ -87,7 +87,7 @@ protocol SectionDataSource {
     func asSection(with index: Int) -> Section<Self, T>
 }
 
-extension SectionDataSource {
+public extension SectionDataSource {
     var asSection: Section<Self, T> {
         return .init(self, items: self.items)
     }
@@ -97,7 +97,7 @@ extension SectionDataSource {
     }
 }
 
-extension Array where Element: SectionDataSource {
+public extension Array where Element: SectionDataSource {
     func asSection() -> [Section<Element, Element.T>] {
         return self.enumerated().compactMap { $0.1.asSection(with: $0.0) }
     }

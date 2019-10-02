@@ -11,19 +11,19 @@ import RxCocoa
 import RxSwift
 import UMUtils
 
-protocol IndexBindable: ViewModelBindable where Model: IndexModel {
+public protocol IndexBindable: ViewModelBindable where Model: IndexModel {
     /// Reload view when viewModel.indexRelay is subscribed
     func reloadViews(_ index: Model.Index)
     func configure(_ index: Model.Index)
     var disposeBag: DisposeBag { get set }
 }
 
-protocol IndexModel: ViewModel {
+public protocol IndexModel: ViewModel {
     associatedtype Index
     var indexRelay: BehaviorRelay<Index> { get }
 }
 
-extension IndexBindable {
+public extension IndexBindable {
     func configure(_ index: Model.Index) {
         self.viewModel?.indexRelay.accept(index)
     }
@@ -31,7 +31,7 @@ extension IndexBindable {
     func reloadViews(_ index: Model.Index) {}
 }
 
-extension IndexBindable {
+public extension IndexBindable {
     func bindViewModel(viewModel: Model) {
         viewModel.indexRelay.asDriver().drive(onNext: { [weak self] index in
             self?.reloadViews(index)
@@ -40,7 +40,7 @@ extension IndexBindable {
 }
 
 /// This protocol already implements bindViewModel. If you override it in any class, you should implement the bindViewModel with viewModel.rowRelay subscriber.
-protocol RowBindable: IndexBindable where Model: RowModel<Item> {
+public protocol RowBindable: IndexBindable where Model: RowModel<Item> {
     typealias Index = Row<Item>
     associatedtype Item
     
@@ -48,7 +48,7 @@ protocol RowBindable: IndexBindable where Model: RowModel<Item> {
 //    func configure(_ row: Row<Item>)
 }
 
-extension RowBindable {
+public extension RowBindable {
     func bindViewModel(viewModel: RowModel<Item>) {
         viewModel.indexRelay.asDriver().drive(onNext: { [weak self] index in
             self?.reloadViews(index)
@@ -56,14 +56,16 @@ extension RowBindable {
     }
 }
 
-class RowModel<T>: ViewModel, IndexModel {
-    typealias Index = Row<T>
+open class RowModel<T>: ViewModel, IndexModel {
+    public typealias Index = Row<T>
     
-    let indexRelay: BehaviorRelay<Row<T>> = .init(value: .empty)
+    public let indexRelay: BehaviorRelay<Row<T>> = .init(value: .empty)
+    
+    public init() {}
 }
 
 /// This protocol already implements bindViewModel. If you override it in any class, you should implement the bindViewModel with viewModel.rowRelay subscriber.
-protocol SectionRowBindable: IndexBindable where Model: SectionRowModel<Section, Item> {
+public protocol SectionRowBindable: IndexBindable where Model: SectionRowModel<Section, Item> {
     typealias Index = SectionRow<Section, Item>
     associatedtype Section
     associatedtype Item
@@ -72,7 +74,7 @@ protocol SectionRowBindable: IndexBindable where Model: SectionRowModel<Section,
 //    func configure(_ sectionRow: SectionRow<Section, Item>)
 }
 
-extension SectionRowBindable {
+public extension SectionRowBindable {
     func bindViewModel(viewModel: SectionRowModel<Section, Item>) {
         viewModel.indexRelay.asDriver().drive(onNext: { [weak self] index in
             self?.reloadViews(index)
@@ -80,8 +82,10 @@ extension SectionRowBindable {
     }
 }
 
-class SectionRowModel<X, Y>: ViewModel, IndexModel {
-    typealias Index = SectionRow<X, Y>
+open class SectionRowModel<X, Y>: ViewModel, IndexModel {
+    public typealias Index = SectionRow<X, Y>
     
-    let indexRelay: BehaviorRelay<SectionRow<X, Y>> = .init(value: .empty)
+    public let indexRelay: BehaviorRelay<SectionRow<X, Y>> = .init(value: .empty)
+    
+    public init() {}
 }

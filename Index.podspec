@@ -34,7 +34,7 @@ TODO: Add long description of the pod here.
   s.source_files = 'Index/Classes/**/*'
   
   s.subspec 'Bindable' do |s|
-        s.source_files = "Bidable/**/*"
+        s.source_files = "Bindable/**/*"
         s.dependency "UMUtils/ViewModel"
         s.dependency "RxSwift"
         s.dependency "RxCocoa"
@@ -43,5 +43,6 @@ TODO: Add long description of the pod here.
   s.subspec 'Container' do |s|
       s.source_files = "Container/**/*"
       s.dependency "Index/Bindable"
+      s.dependency "UIContainer"
   end
 end

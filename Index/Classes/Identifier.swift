@@ -8,16 +8,16 @@
 
 import Foundation
 
-protocol Identifier {
+public protocol Identifier {
     var identifier: Int { get }
 }
 
-extension Equatable where Self: Identifier {}
+public extension Equatable where Self: Identifier {}
 
-func == (lhs: Identifier?, rhs: Identifier?) -> Bool {
+public func == (lhs: Identifier?, rhs: Identifier?) -> Bool {
     return lhs?.identifier == rhs?.identifier
 }
 
-func != (lhs: Identifier?, rhs: Identifier?) -> Bool {
+public func != (lhs: Identifier?, rhs: Identifier?) -> Bool {
     return lhs?.identifier != rhs?.identifier
 }

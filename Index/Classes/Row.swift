@@ -8,18 +8,18 @@
 
 import Foundation
 
-extension IndexPath {
+public extension IndexPath {
     static var zero: IndexPath {
         return .init(row: 0, section: 0)
     }
 }
 
-enum RowEditable<T> {
+public enum RowEditable<T> {
     case remove(T)
     case insert(T)
 }
 
-protocol IndexProtocol {
+public protocol IndexProtocol {
     associatedtype Index
     var value: Index? { get }
     var indexPath: IndexPath { get }
@@ -30,7 +30,7 @@ protocol IndexProtocol {
     init()
 }
 
-extension Array where Element: IndexProtocol {
+public extension Array where Element: IndexProtocol {
     func uniqued() -> [Element] {
         return reduce(into: []) { result, element in
             if !result.contains(where: { $0.indexPath == element.indexPath }) {
@@ -40,7 +40,7 @@ extension Array where Element: IndexProtocol {
     }
 }
 
-extension IndexProtocol {
+public extension IndexProtocol {
     var item: Index {
         return self.value!
     }
@@ -54,25 +54,25 @@ extension IndexProtocol {
     }
 }
 
-final class Row<Index>: IndexProtocol {
-    let value: Index?
-    let isSelected: Bool
+public final class Row<Index>: IndexProtocol {
+    public let value: Index?
+    public let isSelected: Bool
     
-    let indexPath: IndexPath
+    public let indexPath: IndexPath
     
-    init(_ value: Index, indexPath: IndexPath = .zero) {
+    public init(_ value: Index, indexPath: IndexPath = .zero) {
         self.value = value
         self.isSelected = false
         self.indexPath = indexPath
     }
     
-    init(selected value: Index, indexPath: IndexPath = .zero) {
+    public init(selected value: Index, indexPath: IndexPath = .zero) {
         self.value = value
         self.isSelected = true
         self.indexPath = indexPath
     }
     
-    func select(_ isSelected: Bool) -> Row<Index> {
+    public func select(_ isSelected: Bool) -> Row<Index> {
         if isSelected {
             return Row(selected: self.item, indexPath: self.indexPath)
         }
@@ -84,7 +84,7 @@ final class Row<Index>: IndexProtocol {
 //        return section.item.items.first == self.item
 //    }
     
-    internal init() {
+    public init() {
         self.value = nil
         self.isSelected = false
         self.indexPath = .zero
