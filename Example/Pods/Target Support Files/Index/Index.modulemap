@@ -1,0 +1,6 @@
+framework module Index {
+  umbrella header "Index-umbrella.h"
+
+  export *
+  module * { export * }
+}

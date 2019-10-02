@@ -1,0 +1,6 @@
+framework module Pods_Index_Tests {
+  umbrella header "Pods-Index_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
