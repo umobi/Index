@@ -33,10 +33,6 @@ final public class SectionRow<Index, IndexRow>: IndexProtocol {
         self.row = row
     }
     
-    public func isSelected(_ value: Bool) -> SectionRow<Index, IndexRow> {
-        return .init(self.item, row: .init(selected: self.row.item, indexPath: self.row.indexPath))
-    }
-    
     public var indexPath: IndexPath {
         return self.row.indexPath
     }
