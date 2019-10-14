@@ -30,16 +30,6 @@ public protocol IndexProtocol {
     init()
 }
 
-public extension Array where Element: IndexProtocol {
-    func uniqued() -> [Element] {
-        return reduce(into: []) { result, element in
-            if !result.contains(where: { $0.indexPath == element.indexPath }) {
-                result.append(element)
-            }
-        }
-    }
-}
-
 public extension IndexProtocol {
     var item: Index {
         return self.value!

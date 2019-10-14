@@ -8,16 +8,26 @@
 
 import Foundation
 
-public protocol Identifier {
-    var identifier: Int { get }
+open class Identifier {
+    public let identifier: Int
+    
+    public init(_ identifier: Int) {
+        self.identifier = identifier
+    }
 }
 
-public extension Equatable where Self: Identifier {}
-
-public func == (lhs: Identifier?, rhs: Identifier?) -> Bool {
-    return lhs?.identifier == rhs?.identifier
+extension Identifier: Hashable {
+    public static func == (lhs: Identifier, rhs: Identifier) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
 }
 
-public func != (lhs: Identifier?, rhs: Identifier?) -> Bool {
-    return lhs?.identifier != rhs?.identifier
+public extension Array where Element: Identifier {
+    var unique: [Element] {
+        return Array(Set(self))
+    }
 }
