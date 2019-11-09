@@ -11,10 +11,10 @@ import RxCocoa
 import RxSwift
 import UMUtils
 
-public protocol IndexBindable: ViewModelBindable where Model: IndexModel {
+public protocol IndexBindable: ViewModelBindable where ViewModel: IndexModel {
     /// Reload view when viewModel.indexRelay is subscribed
-    func reloadViews(_ index: Model.Index)
-    func configure(_ index: Model.Index)
+    func reloadViews(_ index: ViewModel.Index)
+    func configure(_ index: ViewModel.Index)
     var disposeBag: DisposeBag { get set }
 }
 
@@ -24,15 +24,15 @@ public protocol IndexModel: ViewModel {
 }
 
 public extension IndexBindable {
-    func configure(_ index: Model.Index) {
+    func configure(_ index: ViewModel.Index) {
         self.viewModel?.indexRelay.accept(index)
     }
     
-    func reloadViews(_ index: Model.Index) {}
+    func reloadViews(_ index: ViewModel.Index) {}
 }
 
 public extension IndexBindable {
-    func bindViewModel(viewModel: Model) {
+    func bindViewModel(viewModel: ViewModel) {
         viewModel.indexRelay.asDriver().drive(onNext: { [weak self] index in
             self?.reloadViews(index)
         }).disposed(by: disposeBag)
@@ -40,7 +40,7 @@ public extension IndexBindable {
 }
 
 /// This protocol already implements bindViewModel. If you override it in any class, you should implement the bindViewModel with viewModel.rowRelay subscriber.
-public protocol RowBindable: IndexBindable where Model: RowModel<Item> {
+public protocol RowBindable: IndexBindable where ViewModel: RowModel<Item> {
     typealias Index = Row<Item>
     associatedtype Item
     
@@ -65,7 +65,7 @@ open class RowModel<T>: ViewModel, IndexModel {
 }
 
 /// This protocol already implements bindViewModel. If you override it in any class, you should implement the bindViewModel with viewModel.rowRelay subscriber.
-public protocol SectionRowBindable: IndexBindable where Model: SectionRowModel<Section, Item> {
+public protocol SectionRowBindable: IndexBindable where ViewModel: SectionRowModel<Section, Item> {
     typealias Index = SectionRow<Section, Item>
     associatedtype Section
     associatedtype Item
