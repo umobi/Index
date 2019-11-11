@@ -80,3 +80,18 @@ public final class Row<Index>: IndexProtocol {
         self.indexPath = .zero
     }
 }
+
+#if canImport(SwiftUI)
+
+import SwiftUI
+
+extension Identifiable where Self: IndexProtocol, Index: Identifier {
+    public typealias ID = Int
+    public var id: Int {
+        return self.item.identifier
+    }
+}
+
+extension Row: Identifiable where Index: Identifier {}
+
+#endif

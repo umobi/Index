@@ -102,3 +102,11 @@ public extension Array where Element: SectionDataSource {
         return self.asSection().compactMap { $0.asSectionRows }
     }
 }
+
+#if canImport(SwiftUI)
+
+import SwiftUI
+
+extension SectionRow: Identifiable where IndexRow: Identifier {}
+
+#endif
