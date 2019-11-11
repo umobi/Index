@@ -70,10 +70,6 @@ public final class Row<Index>: IndexProtocol {
         return Row(self.item, indexPath: self.indexPath)
     }
     
-//    func isFirst<X: SectionDataSource, Y: Identifier>(_ section: Section<X, Y>) -> Bool where X.T == Identifier, Index == Identifier {
-//        return section.item.items.first == self.item
-//    }
-    
     public init() {
         self.value = nil
         self.isSelected = false
@@ -85,6 +81,7 @@ public final class Row<Index>: IndexProtocol {
 
 import SwiftUI
 
+@available(iOS 13, *)
 extension Identifiable where Self: IndexProtocol, Index: Identifier {
     public typealias ID = Int
     public var id: Int {
@@ -92,6 +89,7 @@ extension Identifiable where Self: IndexProtocol, Index: Identifier {
     }
 }
 
+@available(iOS 13, *)
 extension Row: Identifiable where Index: Identifier {}
 
 #endif

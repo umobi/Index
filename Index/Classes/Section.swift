@@ -107,6 +107,11 @@ public extension Array where Element: SectionDataSource {
 
 import SwiftUI
 
-extension SectionRow: Identifiable where IndexRow: Identifier {}
+@available(iOS 13, *)
+extension SectionRow: Identifiable where IndexRow: Identifier {
+    public var id: Int {
+        return self.row.id
+    }
+}
 
 #endif
