@@ -34,7 +34,7 @@ public extension UIStackView {
 
         if containers.count > elements.count {
             containers[elements.count..<containers.count].forEach {
-                $0.removeContainer()
+                $0.removeFromSuperview()
             }
             containers = Array(containers[0..<elements.count])
 
