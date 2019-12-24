@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Index'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'Index helps with data collection for cells like UITableViewCell giving more information besides only the object'
 
 # This description is used to generate tags and improve search results.
@@ -43,6 +43,6 @@ Index has Row, Section, and SectionRow as your data provider for collection of v
   s.subspec 'Container' do |s|
       s.source_files = "Container/**/*"
       s.dependency "Index/Bindable"
-      s.dependency "UIContainer"
+      s.dependency "UIContainer", '~> 1.1.0'
   end
 end

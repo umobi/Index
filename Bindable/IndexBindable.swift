@@ -11,11 +11,11 @@ import RxCocoa
 import RxSwift
 import UMUtils
 
-public protocol IndexBindable: ViewModelBindable where Model: IndexModel {
+public protocol IndexBindable: ViewModelBindable where ViewModel: IndexModel {
     /// Reload view when viewModel.indexRelay is subscribed
-    func reloadViews(_ index: Model.Index)
-    func configure(_ index: Model.Index)
-    var disposeBag: DisposeBag { get set }
+    func reloadViews(_ index: ViewModel.Index)
+    func configure(_ index: ViewModel.Index)
+    var disposeBag: DisposeBag { get }
 }
 
 public protocol IndexModel: ViewModel {
@@ -24,15 +24,15 @@ public protocol IndexModel: ViewModel {
 }
 
 public extension IndexBindable {
-    func configure(_ index: Model.Index) {
+    func configure(_ index: ViewModel.Index) {
         self.viewModel?.indexRelay.accept(index)
     }
     
-    func reloadViews(_ index: Model.Index) {}
+    func reloadViews(_ index: ViewModel.Index) {}
 }
 
 public extension IndexBindable {
-    func bindViewModel(viewModel: Model) {
+    func bindViewModel(viewModel: ViewModel) {
         viewModel.indexRelay.asDriver().drive(onNext: { [weak self] index in
             self?.reloadViews(index)
         }).disposed(by: disposeBag)
@@ -40,7 +40,7 @@ public extension IndexBindable {
 }
 
 /// This protocol already implements bindViewModel. If you override it in any class, you should implement the bindViewModel with viewModel.rowRelay subscriber.
-public protocol RowBindable: IndexBindable where Model: RowModel<Item> {
+public protocol RowBindable: IndexBindable where ViewModel: RowModel<Item> {
     typealias Index = Row<Item>
     associatedtype Item
     
@@ -65,7 +65,7 @@ open class RowModel<T>: ViewModel, IndexModel {
 }
 
 /// This protocol already implements bindViewModel. If you override it in any class, you should implement the bindViewModel with viewModel.rowRelay subscriber.
-public protocol SectionRowBindable: IndexBindable where Model: SectionRowModel<Section, Item> {
+public protocol SectionRowBindable: IndexBindable where ViewModel: SectionRowModel<Section, Item> {
     typealias Index = SectionRow<Section, Item>
     associatedtype Section
     associatedtype Item
@@ -88,4 +88,100 @@ open class SectionRowModel<X, Y>: ViewModel, IndexModel {
     public let indexRelay: BehaviorRelay<SectionRow<X, Y>> = .init(value: .empty)
     
     public init() {}
+}
+
+
+public enum NavigateObject<E: Identifier> {
+    case element(E)
+    case identifier(Int)
+    case empty
+
+    public var value: Int? {
+        switch self {
+        case .element(let element):
+            return element.identifier
+        case .identifier(let identifier):
+            return identifier
+        case .empty:
+            return nil
+        }
+    }
+
+    public var item: Int {
+        return self.value!
+    }
+
+    public var object: E? {
+        switch self {
+        case .element(let element):
+            return element
+        default:
+            return nil
+        }
+    }
+
+    public var isEmpty: Bool {
+        if case .empty = self {
+            return true
+        }
+
+        return false
+    }
+}
+
+/// This protocol already implements bindViewModel. If you override it in any class, you should implement the bindViewModel with viewModel.rowRelay subscriber.
+public protocol NavigationBindable: IndexBindable where ViewModel: NavigationModel<Item> {
+    typealias Index = NavigateObject<Item>
+    associatedtype Item: Identifier
+
+//    func reloadViews(_ row: Row<Item>)
+//    func configure(_ row: Row<Item>)
+
+    func reloadIndex()
+}
+
+public extension NavigationBindable {
+    func configure(_ index: ViewModel.Index) {
+        self.viewModel?.indexRelay.accept(index)
+        self.reloadIndex()
+    }
+
+    func reloadIndex() {
+        self.viewModel?.needsReload.accept(())
+    }
+
+    func reloadViews(_ index: ViewModel.Index) {}
+}
+
+public extension NavigationBindable {
+    func bindViewModel(viewModel: NavigationModel<Item>) {
+        viewModel.indexRelay.asDriver().drive(onNext: { [weak self] index in
+            self?.reloadViews(index)
+        }).disposed(by: disposeBag)
+    }
+}
+
+open class NavigationModel<T: Identifier>: ViewModel, IndexModel {
+    public typealias Index = NavigateObject<T>
+
+    public let indexRelay: BehaviorRelay<Index> = .init(value: .empty)
+    fileprivate var needsReload: PublishRelay<Void> = .init()
+
+    public var reloadIndex: Observable<Index> = .never()
+
+    public init() {
+        self.reloadIndex = self.needsReload
+            .flatMapLatest { [weak self] _ -> Observable<Index> in
+                return self?.indexRelay.filter { !$0.isEmpty }
+                    .first()
+                    .asObservable()
+                    .flatMapLatest { index -> Observable<Index> in
+                        guard let index = index else {
+                            return .never()
+                        }
+
+                        return .just(index)
+                    } ?? .never()
+            }
+    }
 }

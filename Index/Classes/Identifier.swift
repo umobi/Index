@@ -31,3 +31,16 @@ public extension Array where Element: Identifier {
         return Array(Set(self))
     }
 }
+
+#if canImport(SwiftUI)
+
+import SwiftUI
+
+@available(iOS 13, *)
+extension Identifier: Identifiable {
+    public var id: Int {
+        return self.identifier
+    }
+}
+
+#endif
