@@ -9,7 +9,7 @@
 import Foundation
 import UIContainer
 
-public extension UIContainer where View: IndexBindable {
+public extension ContainerRepresentable where View: IndexBindable {
     /// This method should be used when you have a limited number of views that will repeat only because you have an array that will configure your view
     static func asCells<E>(_ elements: [E], in parentView: ParentView!) -> [(Self, E)] where E == View.ViewModel.Index {
         return elements.map {
@@ -22,7 +22,7 @@ public extension UIContainer where View: IndexBindable {
 
 public extension UIStackView {
     @discardableResult
-    func reloadArrangedSubviews<C: UIContainer, E>(_ container: C.Type, with elements: [E], in parentView: C.ParentView!) -> [(C, E)] where C: UIView, C.View: IndexBindable, E == C.View.ViewModel.Index {
+    func reloadArrangedSubviews<C: ContainerRepresentable, E>(_ container: C.Type, with elements: [E], in parentView: C.ParentView!) -> [(C, E)] where C: UIView, C.View: IndexBindable, E == C.View.ViewModel.Index {
         var containers: [C] = self.arrangedSubviews.compactMap {
             guard let container = $0 as? C else {
                 $0.removeFromSuperview()

@@ -43,6 +43,6 @@ Index has Row, Section, and SectionRow as your data provider for collection of v
   s.subspec 'Container' do |s|
       s.source_files = "Container/**/*"
       s.dependency "Index/Bindable"
-      s.dependency "UIContainer", '~> 1.1.0'
+      s.dependency "UIContainer", '~> 1.2.0-beta.3'
   end
 end
