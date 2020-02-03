@@ -99,7 +99,7 @@ public enum NavigateObject<E: Identifier> {
     public var value: Int? {
         switch self {
         case .element(let element):
-            return element.identifier
+            return element.id
         case .identifier(let identifier):
             return identifier
         case .empty:

@@ -76,20 +76,3 @@ public final class Row<Index>: IndexProtocol {
         self.indexPath = .zero
     }
 }
-
-#if canImport(SwiftUI)
-
-import SwiftUI
-
-@available(iOS 13, *)
-extension Identifiable where Self: IndexProtocol, Index: Identifier {
-    public typealias ID = Int
-    public var id: Int {
-        return self.item.identifier
-    }
-}
-
-@available(iOS 13, *)
-extension Row: Identifiable where Index: Identifier {}
-
-#endif
