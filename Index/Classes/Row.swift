@@ -19,7 +19,7 @@ public enum RowEditable<T> {
     case insert(T)
 }
 
-public protocol IndexProtocol {
+public protocol IndexProtocol: Equatable {
     associatedtype Index
     var value: Index? { get }
     var indexPath: IndexPath { get }
@@ -28,6 +28,12 @@ public protocol IndexProtocol {
     func select(_ isSelected: Bool) -> Self
     
     init()
+}
+
+public extension Equatable where Self: IndexProtocol {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.indexPath == rhs.indexPath
+    }
 }
 
 public extension IndexProtocol {
