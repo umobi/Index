@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Index'
-  s.version          = '1.0.2'
+  s.version          = '1.0.3'
   s.summary          = 'Index helps with data collection for cells like UITableViewCell giving more information besides only the object'
 
 # This description is used to generate tags and improve search results.
