@@ -13,6 +13,7 @@
 
 /* Begin PBXFileReference section */
 		06F6BFF027A80451EC3BF2ED /* Pods-Index_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Index_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Index_Tests/Pods-Index_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		0C36D60A2440F2200062752A /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Package.swift; path = ../Package.swift; sourceTree = "<group>"; };
 		3A817CD4649529F9C407E6AC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		47C577544E9232AE4C80ED7C /* Pods_Index_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Index_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACE51AFB9204008FA782 /* Index_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Index_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,6 +39,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				0C36D60A2440F2200062752A /* Package.swift */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,

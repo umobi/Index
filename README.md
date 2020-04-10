@@ -200,7 +200,7 @@ On our view controller we need:
 
 ## Author
 
-brennobemoura, brennobemoura@outlook.com.br
+brennobemoura, brenno@umobi.com.br
 
 ## License
 
