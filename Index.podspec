@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Index'
-  s.version          = '1.0.2'
+  s.version          = '1.1.0'
   s.summary          = 'Index helps with data collection for cells like UITableViewCell giving more information besides only the object'
 
 # This description is used to generate tags and improve search results.
@@ -24,25 +24,32 @@ Index has Row, Section, and SectionRow as your data provider for collection of v
   s.homepage         = 'https://github.com/umobi/Index'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'brennobemoura' => 'brennobemoura@outlook.com' }
+  s.author           = { 'brennobemoura' => 'brenno@umobi.com.br' }
   s.source           = { :git => 'https://github.com/umobi/Index.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
   s.swift_version = "5.1"
 
-  s.source_files = 'Index/Classes/**/*'
-  
-  s.subspec 'Bindable' do |s|
-        s.source_files = "Bindable/**/*"
-        s.dependency "UMUtils/ViewModel"
-        s.dependency "RxSwift"
-        s.dependency "RxCocoa"
+  s.default_subspec = "Core"
+
+  s.subspec 'Core' do |s|
+        s.source_files = "Sources/Index/**/*.swift"
   end
   
-  s.subspec 'Container' do |s|
-      s.source_files = "Container/**/*"
-      s.dependency "Index/Bindable"
-      s.dependency "UIContainer", '~> 1.1.0'
+  s.subspec 'IndexBindable' do |s|
+        s.source_files = "Sources/IndexBindable/**/*.swift"
+
+        s.dependency "Index/Core"
+        s.dependency "UMUtils/UMViewModel", "~> 1.1.2"
+        s.dependency "RxSwift", "~> 5.0.0"
+        s.dependency "RxCocoa", "~> 5.0.0"
+  end
+  
+  s.subspec 'IndexContainer' do |s|
+      s.source_files = "Sources/IndexContainer/**/*.swift"
+
+      s.dependency "Index/IndexBindable"
+      s.dependency "UIContainer", '~> 1.2.0-beta.9'
   end
 end
