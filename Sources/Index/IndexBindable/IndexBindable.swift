@@ -23,13 +23,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
-
-#if !COCOAPODS
-import Index
-import UMViewModel
-#else
 import UMUtils
-#endif
 
 public protocol IndexBindable: ViewModelBindable where ViewModel: IndexModel {
     /// Reload view when viewModel.indexRelay is subscribed
