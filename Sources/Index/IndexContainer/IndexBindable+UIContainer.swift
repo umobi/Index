@@ -22,12 +22,8 @@
 
 import Foundation
 import UIKit
+import UMUtils
 import UIContainer
-
-#if !COCOAPODS
-import Index
-import IndexBindable
-#endif
 
 public extension ContainerRepresentable where View: IndexBindable {
     /// This method should be used when you have a limited number of views that will repeat only because you have an array that will configure your view
