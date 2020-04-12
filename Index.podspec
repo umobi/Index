@@ -10,26 +10,17 @@ Pod::Spec.new do |s|
   s.name             = 'Index'
   s.version          = '1.1.1'
   s.summary          = 'Index helps with data collection for cells like UITableViewCell giving more information besides only the object'
-
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
-  s.description      = <<-DESC
-Index has Row, Section, and SectionRow as your data provider for collection of views. You can transform Object into Row<Object> easily. The Section is for data that has the same feeling for section with rows and you can transform them into Section or SectionRow with you want to have a one-dimensional data.
-                       DESC
-
   s.homepage         = 'https://github.com/umobi/Index'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'brennobemoura' => 'brenno@umobi.com.br' }
   s.source           = { :git => 'https://github.com/umobi/Index.git', :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
   s.swift_version = "5.1"
+
+  s.description      = <<-DESC
+  Index has Row, Section, and SectionRow as your data provider for collection of views. You can transform Object into Row<Object> easily. The Section is for data that has the same feeling for section with rows and you can transform them into Section or SectionRow with you want to have a one-dimensional data.
+                         DESC
 
   s.default_subspec = "Core"
 
